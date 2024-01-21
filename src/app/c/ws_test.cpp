@@ -98,18 +98,12 @@ private:
     }
 };
 
-bool checkDir() {
-    std::string dir = seasocks::getWorkingDir();
-    if (!seasocks::endsWith(dir, "seasocks")) {
-        std::cerr << "Samples must be run in the main seasocks directory" << std::endl;
-        return false;
-    }
-    return true;
-}
 
-int main(int /*argc*/, const char* /*argv*/[]) {
-    if (!checkDir())
-        return -1;
+int main(int argc, const char* argv[]) {
+    uint16_t port = 9090;
+    if(argc > 1) {
+        port = std::atoi(argv[1]);
+    }
 
     auto logger = std::make_shared<PrintfLogger>(Logger::Level::Debug);
 
@@ -117,6 +111,6 @@ int main(int /*argc*/, const char* /*argv*/[]) {
 
     auto handler = std::make_shared<MyHandler>(&server);
     server.addWebSocketHandler("/ws", handler);
-    server.serve("src/ws_test_web", 9090);
+    server.serve("src/ws_test_web", port);
     return 0;
 }
