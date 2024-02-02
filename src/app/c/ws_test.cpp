@@ -104,7 +104,7 @@ int main(int argc, const char* argv[]) {
     if(argc > 1) {
         port = std::atoi(argv[1]);
     }
-    std::printf("Yo\n");
+    std::printf("Yo\n")
 
     auto logger = std::make_shared<PrintfLogger>(Logger::Level::Debug);
 
