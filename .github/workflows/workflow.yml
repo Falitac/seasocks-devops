@@ -26,7 +26,7 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - name: Setup
-        run: apt-get update && apt-get install -y cmake zlib1g-dev git
+        run: sudo apt-get update && apt-get install -y cmake zlib1g-dev git
       - name: Build
         run: |
           cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release -DCOVERAGE=ON
