@@ -1,11 +1,11 @@
-name: GitHub Actions Demo
+name: Seasock websocket server
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   push:
     branches:
       - ino_dev
 jobs:
-  Explore-GitHub-Actions:
+  Build-For-Linux:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,7 +26,7 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - name: Setup
-        run: sudo apt-get update && apt-get install -y cmake zlib1g-dev git
+        run: sudo apt-get update && sudo apt-get install -y cmake zlib1g-dev git
       - name: Build
         run: |
           cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release -DCOVERAGE=ON
