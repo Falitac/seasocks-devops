@@ -1,9 +1,18 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+on:
+  push:
+    branches:
+      - ino_dev
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        build_config:
+          - { compiler: gcc, version: 10, args: "-DDEFLATE_SUPPORT=OFF" }
+    env:
+      JOBS: 2
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -16,3 +25,9 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Setup
+        run: apt-get update && apt-get install -y cmake zlib1g-dev git
+      - name: Build
+        run: |
+          cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release -DCOVERAGE=ON
+          cmake --build build -- -j${JOBS}
